@@ -7,3 +7,4 @@ Although this App is rather small, I decided to practice creating multi modules 
 
 Here's a modules dependency graph:
 
+![App Diagram](media/calc_modules.drawio.png)
