@@ -62,6 +62,9 @@ dependencies {
     kapt(DaggerHilt.hiltCompiler)
 
     implementation(project(Modules.core))
+    implementation(project(Modules.calculatorPresentation))
+    implementation(project(Modules.calculatorDomain))
+
 
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
