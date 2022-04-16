@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.ui.Modifier
+import com.poznan.put.michalxpz.calculator_presentation.CalculatorScreen
 import com.poznan.put.michalxpz.smartcalc.ui.theme.SmartCalcTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,10 +24,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Button(onClick = {}) {
-                        Text(text = "Press me")
-
-                    }
+                    CalculatorScreen()
                 }
             }
         }

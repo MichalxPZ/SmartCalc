@@ -5,6 +5,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import com.poznan.put.michalxpz.core_ui.Dimensions
+import com.poznan.put.michalxpz.core_ui.LocalSpacing
 
 private val DarkColorPalette = lightColors(
     primary = WhiteBackground1,
@@ -26,10 +29,12 @@ fun SmartCalcTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
         LightColorPalette
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = SmartCalcTYpography,
-        shapes = Shapes,
-        content = content
-    )
+    CompositionLocalProvider(LocalSpacing provides Dimensions()) {
+        MaterialTheme(
+            colors = colors,
+            typography = SmartCalcTYpography,
+            shapes = Shapes,
+            content = content
+        )
+    }
 }
