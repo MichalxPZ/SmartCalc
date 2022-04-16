@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/calculator/calculator_domain" />
             <option value="$PROJECT_DIR$/calculator/calculator_presentation" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core-ui" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

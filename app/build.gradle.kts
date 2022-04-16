@@ -62,6 +62,7 @@ dependencies {
     kapt(DaggerHilt.hiltCompiler)
 
     implementation(project(Modules.core))
+    implementation(project(Modules.coreUI))
     implementation(project(Modules.calculatorPresentation))
     implementation(project(Modules.calculatorDomain))
 
