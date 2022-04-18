@@ -4,7 +4,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
 
 android {
-
     compileSdk ProjectConfig.compileSdk
 
     defaultConfig {
@@ -38,7 +37,6 @@ android {
         jvmTarget = '1.8'
     }
 }
-
 
 dependencies {
     implementation Compose.compiler

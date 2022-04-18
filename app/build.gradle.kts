@@ -67,7 +67,6 @@ dependencies {
     implementation(project(Modules.calculatorPresentation))
     implementation(project(Modules.calculatorDomain))
 
-
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
 

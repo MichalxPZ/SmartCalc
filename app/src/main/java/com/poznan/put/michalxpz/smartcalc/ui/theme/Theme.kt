@@ -9,13 +9,13 @@ import androidx.compose.runtime.CompositionLocalProvider
 import com.poznan.put.michalxpz.core_ui.Dimensions
 import com.poznan.put.michalxpz.core_ui.LocalSpacing
 
-private val DarkColorPalette = lightColors(
+private val LightColorPalette = lightColors(
     primary = WhiteBackground1,
     secondary = WhiteBackground2,
     onPrimary = BlackText
 )
 
-private val LightColorPalette = darkColors(
+private val DarkColorPalette = darkColors(
     primary = BlackBackground1,
     onPrimary = WhiteText,
     secondary = BlackBackground2,
