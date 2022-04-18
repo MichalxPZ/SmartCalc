@@ -29,7 +29,20 @@ fun CalcRow(
         texts.forEachIndexed { index, text ->
             CalcButton(
                 text = text,
-                onClick = { viewModel.onEvent(CalculatorEvent.SymbolClicked(text)) },
+                onClick = {
+                    when(text) {
+                       in "+", "/", "X", "-", "%" -> {
+                           viewModel.onEvent(CalculatorEvent.OperatorClicked(text))
+                       }
+                        in "0".."9" -> {
+                            viewModel.onEvent(CalculatorEvent.NumberClicked(text))
+                        }
+                        "AC" -> { viewModel.onEvent(CalculatorEvent.AllClearCLicked) }
+                        "+/-" -> { viewModel.onEvent(CalculatorEvent.ChangeSingClicked) }
+                        "=" -> { viewModel.onEvent(CalculatorEvent.EqualsClicked) }
+                        "." -> { viewModel.onEvent(CalculatorEvent.DotClicked) }
+                    }
+                },
                 textColor = colors[index],
                 modifier = Modifier.weight(weights[index])
             )

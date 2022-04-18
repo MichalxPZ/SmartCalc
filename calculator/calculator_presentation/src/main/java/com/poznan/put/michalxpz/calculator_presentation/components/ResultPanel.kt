@@ -16,7 +16,8 @@ import com.poznan.put.michalxpz.core_ui.LocalSpacing
 @Composable
 fun ResultPanel(
     input: String,
-    result: String
+    result: String,
+    errorMessage: String? = null
 ) {
     val spacing = LocalSpacing.current
     Column(
@@ -32,8 +33,8 @@ fun ResultPanel(
                 Text(
                     text = buildAnnotatedString {
                         input.forEach { symbol ->
-                            if ( listOf("/", "X", "-", "+").contains(symbol.toString())) {
-                                withStyle(SpanStyle( color = Color.Red)) { append(symbol) }
+                            if ( listOf("/", "X", "-", "+", "%").contains(symbol.toString())) {
+                                withStyle(SpanStyle( color = Color.Red.copy(alpha = 0.8f))) { append(symbol) }
                             } else {
                                 append(symbol)
                             }
@@ -43,11 +44,20 @@ fun ResultPanel(
                     style = MaterialTheme.typography.h4,
                     color = Color.LightGray
                 )
-                Text(
-                    text = result,
-                    textAlign = TextAlign.End,
-                    style = MaterialTheme.typography.h1,
-                )
+                if (errorMessage != null) {
+                    Text(
+                        text = errorMessage,
+                        textAlign = TextAlign.End,
+                        style = MaterialTheme.typography.h1,
+                        color = Color.Red
+                    )
+                } else {
+                    Text(
+                        text = result,
+                        textAlign = TextAlign.End,
+                        style = MaterialTheme.typography.h1,
+                    )
+                }
             }
 
         }
