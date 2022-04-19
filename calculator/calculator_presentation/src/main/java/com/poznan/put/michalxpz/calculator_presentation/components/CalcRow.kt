@@ -39,7 +39,7 @@ fun CalcRow(
                         }
                         "AC" -> { viewModel.onEvent(CalculatorEvent.AllClearCLicked) }
                         "+/-" -> { viewModel.onEvent(CalculatorEvent.ChangeSingClicked) }
-                        "=" -> { viewModel.onEvent(CalculatorEvent.EqualsClicked) }
+                        "_" -> { viewModel.onEvent(CalculatorEvent.SpaceClicked) }
                         "." -> { viewModel.onEvent(CalculatorEvent.DotClicked) }
                     }
                 },

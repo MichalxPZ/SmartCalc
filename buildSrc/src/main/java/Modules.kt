@@ -9,4 +9,6 @@ object Modules {
     const val calculatorDomain = ":calculator:calculator_domain"
     const val calculatorPresentation = ":calculator:calculator_presentation"
 
+    const val settingsPresentation = ":settings:settings_presentation"
+
 }

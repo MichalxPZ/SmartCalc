@@ -63,7 +63,7 @@ fun CalcNumberPanel(
                 Spacer(modifier = Modifier.height(spacing.small))
 
                 CalcRow(
-                    texts = listOf("0", ".", "="),
+                    texts = listOf("0", ".", "_"),
                     colors = listOf(Color.LightGray, Color.LightGray, Color.LightGray, Color.Red),
                     weights = listOf(0.33f, 0.33f, 0.33f),
                     viewModel

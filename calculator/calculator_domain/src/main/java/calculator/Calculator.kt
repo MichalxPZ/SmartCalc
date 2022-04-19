@@ -11,6 +11,7 @@ import kotlin.math.floor
 import kotlin.math.round
 
 class Calculator {
+    var ROUND = 2
     private var stack = MutableStack<Double>()
     var calculatorState = CalculatorInstance()
 
@@ -23,20 +24,22 @@ class Calculator {
         if (input.isEmpty()) throw IllegalArgumentException()
         val negativeSign = input.first() == '-'
         val symbols = input.split(' ').filter { it.isNotEmpty() }
+        symbols.filter { isNumber(it) }.forEach { stack.push(it.toDouble()) }
         val (arg1, arg2, operator) = symbols.takeLast(3)
+        stack.pop()
+        stack.pop()
         val result = parseOperation(arg2.toDouble(), arg1.toDouble(), operator)
         calculatorState = if (result.rem(1).equals(0.0)) {
             calculatorState.copy(
-                input = result.toString(),
+                input = "$stack $result ",
                 result = result.toInt().toString()
             )
         } else {
-            val ROUND = 2
             val roundingMode = RoundingMode.DOWN
             val decimalFormat = DecimalFormat("#.${"#".repeat(ROUND)}")
             decimalFormat.roundingMode = roundingMode
             calculatorState.copy(
-                input = result.toString(),
+                input = "$stack $result ",
                 result = decimalFormat.format(result).toString()
             )
         }

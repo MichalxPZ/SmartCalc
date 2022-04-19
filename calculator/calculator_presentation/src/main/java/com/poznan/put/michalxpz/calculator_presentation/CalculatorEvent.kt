@@ -5,7 +5,7 @@ sealed class CalculatorEvent {
     class OperatorClicked(val operator: String) : CalculatorEvent()
     object ChangeSingClicked : CalculatorEvent()
     object DotClicked : CalculatorEvent()
-    object EqualsClicked : CalculatorEvent()
+    object SpaceClicked : CalculatorEvent()
     object AllClearCLicked : CalculatorEvent()
     object OnError : CalculatorEvent()
 }

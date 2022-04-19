@@ -31,15 +31,7 @@ class CalculatorScreenViewModel @Inject constructor() : ViewModel() {
     fun onEvent(event : CalculatorEvent) {
         when(event) {
             is CalculatorEvent.NumberClicked -> {
-                state = if (state.input.isNotEmpty()) {
-                    if (state.input.last() == '.') {
-                        state.copy(input = state.input + event.number)
-                    } else {
-                        state.copy(input = state.input + " " + event.number)
-                    }
-                } else {
-                    state.copy(input = event.number)
-                }
+                state = state.copy(input = state.input + event.number)
             }
             CalculatorEvent.AllClearCLicked -> {
                 state = state.copy(input = "", result = "", errorMessage = null)
@@ -55,29 +47,34 @@ class CalculatorScreenViewModel @Inject constructor() : ViewModel() {
             CalculatorEvent.DotClicked -> {
                 state = if (state.input.isNotEmpty() && state.input.last().isDigit()) {
                     if (state.input.split(" ").takeLast(1).toString().contains(".")) {
-                        state.copy(input =  state.input + " 0.")
+                        state.copy(input =  state.input + "0 0.")
                     } else {
                         state.copy(input =  state.input + ".")
                     }
                 } else {
-                    if (state.input.isNotEmpty()) {
-                        state.copy(input =  state.input + " 0.")
+                    if (state.input.isNotEmpty() && state.input.last().equals('.')) {
+                        state.copy(input =  state.input + "0 0.")
                     } else {
                         state.copy(input =  state.input + "0.")
                     }
                 }
             }
-            CalculatorEvent.EqualsClicked -> {
-                calculate()
+            CalculatorEvent.SpaceClicked -> {
+                state = state.copy(input = state.input + " ")
             }
             is CalculatorEvent.OperatorClicked -> {
                 state = state.copy(input = state.input + " " + event.operator)
                 calculator.calculatorState = state.toCalculatorInstance()
+                calculate()
             }
             CalculatorEvent.OnError -> {
                 state = state.copy(errorMessage = "There was an error with your calculation!\nPlease restart")
             }
         }
+    }
+
+    fun setCalcoulatorRound(round: Int) {
+        calculator.ROUND = round
     }
 
     private fun calculate() {

@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'com.google.protobuf'
 
 android {
     compileSdk ProjectConfig.compileSdk
@@ -35,6 +37,12 @@ android {
 dependencies {
     kapt DaggerHilt.hiltCompiler
     implementation DaggerHilt.hiltAndroid
+
+    implementation DataStore.dataStore
+    implementation DataStore.dataStorePreferences
+    implementation DataStore.serialization
+    implementation DataStore.collectionsImmutable
+    implementation DataStore.protoBuf
 
     testImplementation Testing.junit4
     testImplementation Testing.junitAndroidExt

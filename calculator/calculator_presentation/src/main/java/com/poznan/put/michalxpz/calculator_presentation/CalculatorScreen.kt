@@ -3,7 +3,6 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,14 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.poznan.put.michalxpz.calculator_presentation.CalculatorScreenViewModel
-import com.poznan.put.michalxpz.calculator_presentation.R
 import com.poznan.put.michalxpz.calculator_presentation.components.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -33,13 +28,18 @@ import util.UiEvent
 @Composable
 fun CalculatorScreen(
     navigate: (UiEvent) -> Unit,
-    viewModel: CalculatorScreenViewModel = hiltViewModel(),
-    startSettingsActivity: () -> Unit
+    startSettingsActivity: () -> Unit,
+    round: Int,
+    viewModel: CalculatorScreenViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
     val state = viewModel.state
     val animationTime = 600
     var showSettings by remember { mutableStateOf(false) }
+
+    LaunchedEffect(viewModel) {
+        viewModel.setCalcoulatorRound(round = round)
+    }
 
     Column(
         verticalArrangement = Arrangement.Top,
@@ -84,6 +84,8 @@ fun CalculatorScreen(
                         showSettings = true
                         delay(600)
                         startSettingsActivity()
+                        delay(600)
+                        showSettings = false
                     }
                 }
             ) {
@@ -109,5 +111,10 @@ fun CalculatorScreen(
 @Preview("calculator")
 @Composable
 fun CalcPreview() {
-    CalculatorScreen({}, hiltViewModel<CalculatorScreenViewModel>(), {})
+    CalculatorScreen(
+        {},
+        {},
+        2,
+        hiltViewModel<CalculatorScreenViewModel>()
+    )
 }
