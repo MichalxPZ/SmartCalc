@@ -1,11 +1,14 @@
 package com.poznan.put.michalxpz.calculator_presentation
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import calculator.Calculator
+import com.poznan.put.michalxpz.calculator_presentation.mappers.toCalculatorInstance
+import com.poznan.put.michalxpz.calculator_presentation.mappers.toCalculatorState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -29,15 +32,18 @@ class CalculatorScreenViewModel @Inject constructor() : ViewModel() {
         when(event) {
             is CalculatorEvent.NumberClicked -> {
                 state = if (state.input.isNotEmpty()) {
-                    state.copy(input = state.input + " " + event.number)
+                    if (state.input.last() == '.') {
+                        state.copy(input = state.input + event.number)
+                    } else {
+                        state.copy(input = state.input + " " + event.number)
+                    }
                 } else {
                     state.copy(input = event.number)
                 }
-                calculator.push(event.number)
             }
             CalculatorEvent.AllClearCLicked -> {
-                state = state.copy(input = "", result = "")
-                calculator.drop()
+                state = state.copy(input = "", result = "", errorMessage = null)
+                calculator.calculatorState = state.toCalculatorInstance()
             }
             CalculatorEvent.ChangeSingClicked -> {
                 if (state.input.first().isDigit()) {
@@ -47,14 +53,26 @@ class CalculatorScreenViewModel @Inject constructor() : ViewModel() {
                 }
             }
             CalculatorEvent.DotClicked -> {
-
+                state = if (state.input.isNotEmpty() && state.input.last().isDigit()) {
+                    if (state.input.split(" ").takeLast(1).toString().contains(".")) {
+                        state.copy(input =  state.input + " 0.")
+                    } else {
+                        state.copy(input =  state.input + ".")
+                    }
+                } else {
+                    if (state.input.isNotEmpty()) {
+                        state.copy(input =  state.input + " 0.")
+                    } else {
+                        state.copy(input =  state.input + "0.")
+                    }
+                }
             }
             CalculatorEvent.EqualsClicked -> {
                 calculate()
             }
             is CalculatorEvent.OperatorClicked -> {
                 state = state.copy(input = state.input + " " + event.operator)
-                calculator.push(event.operator)
+                calculator.calculatorState = state.toCalculatorInstance()
             }
             CalculatorEvent.OnError -> {
                 state = state.copy(errorMessage = "There was an error with your calculation!\nPlease restart")
@@ -65,16 +83,12 @@ class CalculatorScreenViewModel @Inject constructor() : ViewModel() {
     private fun calculate() {
         viewModelScope.launch {
             try {
-                val result = calculator.calculate()
-                state = state.copy(
-                    input = state.input.subSequence(1, state.input.length-3).toString() + result,
-                    result = result
-                )
-            } catch(e : CalculationException) {
-                this@CalculatorScreenViewModel.onEvent(CalculatorEvent.OnError)
+                state = calculator.calculate(state.input).toCalculatorState()
+                Log.i("State", "$state")
+            } catch (e: Exception) {
+                state = state.copy(errorMessage = "There was an error with your calculation!\nPlease restart")
+            }
         }
-        }
-
     }
 
 }

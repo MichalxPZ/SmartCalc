@@ -1,5 +1,6 @@
 package com.poznan.put.michalxpz.calculator_presentation.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -33,8 +34,12 @@ fun ResultPanel(
                 Text(
                     text = buildAnnotatedString {
                         input.forEach { symbol ->
-                            if ( listOf("/", "X", "-", "+", "%").contains(symbol.toString())) {
-                                withStyle(SpanStyle( color = Color.Red.copy(alpha = 0.8f))) { append(symbol) }
+                            if (listOf("/", "X", "-", "+", "%").contains(symbol.toString())) {
+                                withStyle(SpanStyle(color = Color.Red.copy(alpha = 0.8f))) {
+                                    append(
+                                        symbol
+                                    )
+                                }
                             } else {
                                 append(symbol)
                             }
@@ -44,18 +49,21 @@ fun ResultPanel(
                     style = MaterialTheme.typography.h4,
                     color = Color.LightGray
                 )
-                if (errorMessage != null) {
+                AnimatedVisibility(errorMessage != null) {
                     Text(
-                        text = errorMessage,
+                        text = errorMessage.toString(),
                         textAlign = TextAlign.End,
-                        style = MaterialTheme.typography.h1,
-                        color = Color.Red
+                        style = MaterialTheme.typography.body2,
+                        color = Color.Red,
+                        maxLines = 2
                     )
-                } else {
+                }
+                AnimatedVisibility(errorMessage == null) {
                     Text(
                         text = result,
                         textAlign = TextAlign.End,
                         style = MaterialTheme.typography.h1,
+                        maxLines = 1
                     )
                 }
             }

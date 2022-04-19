@@ -36,7 +36,9 @@ class MainActivity : ComponentActivity() {
                         startDestination = Routes.CALCULATOR
                     ) {
                         composable(Routes.CALCULATOR) {
-                            CalculatorScreen(navigate = { uiEvent ->
+                            CalculatorScreen(
+                                startSettingsActivity = { startActivity(intent) },
+                                navigate = { uiEvent ->
                                 when (uiEvent) {
                                     is UiEvent.Navigate -> { navController.navigate(uiEvent.route) }
                                     is UiEvent.NavigateToSettingsActivity -> {
