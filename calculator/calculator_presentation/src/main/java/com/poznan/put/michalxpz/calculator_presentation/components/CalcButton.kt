@@ -21,7 +21,7 @@ fun CalcButton(
     onClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
-    textStyle: TextStyle = MaterialTheme.typography.h5,
+    textStyle: TextStyle = MaterialTheme.typography.h6,
     textColor: Color = MaterialTheme.colors.onBackground,
     buttonColor: Color = MaterialTheme.colors.secondary
     ) {

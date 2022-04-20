@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsScreenViewModel @Inject constructor() : ViewModel() {
 
-    var state by mutableStateOf(SettingsState(2))
+    var state by mutableStateOf(SettingsState(SharedPrefs.round))
         private set
 
     fun setState(value: Int) {
