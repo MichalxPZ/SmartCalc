@@ -38,10 +38,14 @@ class CalculatorScreenViewModel @Inject constructor() : ViewModel() {
                 calculator.calculatorState = state.toCalculatorInstance()
             }
             CalculatorEvent.ChangeSingClicked -> {
-                if (state.input.first().isDigit()) {
-                    state = state.copy(input = "-" + state.input)
-                } else if (state.input.first() == '-') {
-                    state = state.copy(input =  state.input.substring(1))
+                if (state.input.isNotEmpty()) {
+                    if (state.input.first().isDigit()) {
+                        state = state.copy(input = "-" + state.input)
+                    } else if (state.input.first() == '-') {
+                        state = state.copy(input =  state.input.substring(1))
+                    }
+                } else {
+                    state = state.copy(input =  "-")
                 }
             }
             CalculatorEvent.DotClicked -> {
@@ -60,7 +64,9 @@ class CalculatorScreenViewModel @Inject constructor() : ViewModel() {
                 }
             }
             CalculatorEvent.SpaceClicked -> {
-                state = state.copy(input = state.input + " ")
+                if (state.input.isNotEmpty() && state.input.last() != ' ') {
+                    state = state.copy(input = state.input + " ")
+                }
             }
             is CalculatorEvent.OperatorClicked -> {
                 state = state.copy(input = state.input + " " + event.operator)
@@ -71,10 +77,6 @@ class CalculatorScreenViewModel @Inject constructor() : ViewModel() {
                 state = state.copy(errorMessage = "There was an error with your calculation!\nPlease restart")
             }
         }
-    }
-
-    fun setCalcoulatorRound(round: Int) {
-        calculator.ROUND = round
     }
 
     private fun calculate() {

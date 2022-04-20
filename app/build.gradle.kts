@@ -3,8 +3,6 @@ plugins {
     kotlin("android")
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
-    kotlin("plugin.serialization")
-    id("com.google.protobuf")
 }
 
 
@@ -60,12 +58,6 @@ dependencies {
     implementation(Compose.navigation)
     implementation(Compose.viewModelCompose)
     implementation(Compose.activityCompose)
-
-    implementation(DataStore.dataStore)
-    implementation(DataStore.serialization)
-    implementation(DataStore.collectionsImmutable)
-    implementation(DataStore.dataStorePreferences)
-    implementation(DataStore.protoBuf)
 
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltCompiler)

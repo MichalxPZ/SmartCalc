@@ -24,7 +24,6 @@ class SettingsActivity : AppCompatActivity() {
                 ) {
                     SettingsScreen(
                         popBack = { finish() },
-                        dataStore = dataStore!!
                     )
                 }
             }

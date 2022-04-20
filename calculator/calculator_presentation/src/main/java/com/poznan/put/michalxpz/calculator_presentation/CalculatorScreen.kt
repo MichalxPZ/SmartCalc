@@ -1,3 +1,5 @@
+package com.poznan.put.michalxpz.calculator_presentation
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
@@ -19,7 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.poznan.put.michalxpz.calculator_presentation.CalculatorScreenViewModel
 import com.poznan.put.michalxpz.calculator_presentation.components.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -29,17 +30,12 @@ import util.UiEvent
 fun CalculatorScreen(
     navigate: (UiEvent) -> Unit,
     startSettingsActivity: () -> Unit,
-    round: Int,
     viewModel: CalculatorScreenViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
     val state = viewModel.state
     val animationTime = 600
     var showSettings by remember { mutableStateOf(false) }
-
-    LaunchedEffect(viewModel) {
-        viewModel.setCalcoulatorRound(round = round)
-    }
 
     Column(
         verticalArrangement = Arrangement.Top,
@@ -85,6 +81,7 @@ fun CalculatorScreen(
                         delay(600)
                         startSettingsActivity()
                         delay(600)
+                        viewModel.onEvent(CalculatorEvent.AllClearCLicked)
                         showSettings = false
                     }
                 }
@@ -97,6 +94,7 @@ fun CalculatorScreen(
             }
         }
         Column(
+            horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.Bottom,
             modifier = Modifier
                 .fillMaxSize()
@@ -114,7 +112,6 @@ fun CalcPreview() {
     CalculatorScreen(
         {},
         {},
-        2,
-        hiltViewModel<CalculatorScreenViewModel>()
+        hiltViewModel()
     )
 }
